@@ -1,22 +1,61 @@
 import React, { useState } from 'react'
-import { HStack, IconButton, VStack, useTheme, Text, Heading, FlatList } from 'native-base'
+import { HStack, IconButton, VStack, useTheme, Text, Heading, FlatList, Center, Icon } from 'native-base'
 
 import Logo from '../assets/logo_secondary.svg'
-import { SignOut } from 'phosphor-react-native'
-import colors from 'native-base/lib/typescript/theme/v33x-theme/base/colors'
+import { ChatTeardropText, SignOut } from 'phosphor-react-native'
 import { Filter } from '../Components/Filter'
 import { Order, OrderProps } from '../Components/Order'
+import Button from '../Components/Button'
 
 export const Home = () => {
 
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open');
 
-  const [orders, setOrders] = useState<OrderProps[]>([{
-    id: '123',
-    patrimony: '123456789',
-    when: '18-07-2022 às 10:00',
-    status: 'open'
-  }])
+  const [orders, setOrders] = useState<OrderProps[]>([
+    {
+      id: '123',
+      patrimony: '123456789',
+      when: '18-07-2022 às 10:00',
+      status: 'open'
+    },
+    {
+      id: '456',
+      patrimony: '123456789',
+      when: '18-07-2022 às 10:00',
+      status: 'open'
+    },
+    {
+      id: '789',
+      patrimony: '123456789',
+      when: '18-07-2022 às 10:00',
+      status: 'closed'
+    },
+    {
+      id: '101112',
+      patrimony: '123456789',
+      when: '18-07-2022 às 10:00',
+      status: 'open'
+    },
+    {
+      id: '131415',
+      patrimony: '123456789',
+      when: '18-07-2022 às 10:00',
+      status: 'open'
+    },
+    {
+      id: '161718',
+      patrimony: '123456789',
+      when: '18-07-2022 às 10:00',
+      status: 'open'
+    },
+    {
+      id: '1920212',
+      patrimony: '123456789',
+      when: '18-07-2022 às 10:00',
+      status: 'open'
+    },
+  ]
+  );
 
   const { colors } = useTheme();
 
@@ -62,11 +101,26 @@ export const Home = () => {
           data={orders}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <Order data={item} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 100 }}
+          ListEmptyComponent={() => (
+            <Center >
+              <ChatTeardropText color={colors.gray[300]} size={40} />
+              <Text
+                color={colors.gray[300]}
+                fontSize="xl"
+                mt={6}
+                textAlign="center"
+              >
+                Você ainda não possui {'\n'}
+                solicitações {statusSelected === 'open' ? 'em andamento' : 'finalizadas'}
+              </Text>
+            </Center>
+          )}
         />
+
+        <Button title="Nova solicitação" />
       </VStack>
-
-
-
     </VStack>
   )
 }
